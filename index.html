@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookEvent Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>BookEvent Manager</h1>
+        <p>Kelola Event & Workshop Buku dengan mudah</p>
+    </header>
+
+    <main>
+        <!-- Form Tambah Event -->
+        <section class="form-section">
+            <h2>Tambah / Ubah Event</h2>
+            <form id="event-form">
+                <input type="hidden" id="event-id">
+                <label for="title">Judul Event:</label>
+                <input type="text" id="title" required>
+
+                <label for="date">Tanggal & Waktu:</label>
+                <input type="datetime-local" id="date" required>
+
+                <label for="location">Lokasi / Platform:</label>
+                <input type="text" id="location" required>
+
+                <label for="capacity">Kapasitas Peserta:</label>
+                <input type="number" id="capacity" required min="1">
+
+                <label for="description">Deskripsi Singkat:</label>
+                <textarea id="description" rows="3"></textarea>
+
+                <button type="submit">Simpan Event</button>
+                <button type="button" id="reset-btn">Reset</button>
+            </form>
+        </section>
+
+        <!-- Daftar Event -->
+        <section class="table-section">
+            <h2>Daftar Event</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Judul</th>
+                        <th>Tanggal & Waktu</th>
+                        <th>Lokasi</th>
+                        <th>Kapasitas</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="event-list">
+                    <!-- Event akan muncul di sini -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>BookWorms &copy; 2025</p>
+    </footer>
+
+    <script>
+        // Mock data sementara (Python nanti bisa ganti backend)
+        let events = [];
+
+        const form = document.getElementById('event-form');
+        const eventList = document.getElementById('event-list');
+        const resetBtn = document.getElementById('reset-btn');
+
+        function renderEvents() {
+            eventList.innerHTML = '';
+            events.forEach((event, index) => {
+                const tr = document.createElement('tr');
+                tr.className = event.status === 'Penuh' ? 'full' : '';
+                tr.innerHTML = `
+                    <td>${event.title}</td>
+                    <td>${new Date(event.date).toLocaleString()}</td>
+                    <td>${event.location}</td>
+                    <td>${event.capacity}</td>
+                    <td>${event.status}</td>
+                    <td>
+                        <button onclick="editEvent(${index})">Edit</button>
+                        <button onclick="deleteEvent(${index})">Hapus</button>
+                    </td>
+                `;
+                eventList.appendChild(tr);
+            });
+        }
+
+        function resetForm() {
+            form.reset();
+            document.getElementById('event-id').value = '';
+        }
+
+        function editEvent(index) {
+            const event = events[index];
+            document.getElementById('event-id').value = index;
+            document.getElementById('title').value = event.title;
+            document.getElementById('date').value = event.date;
+            document.getElementById('location').value = event.location;
+            document.getElementById('capacity').value = event.capacity;
+            document.getElementById('description').value = event.description;
+        }
+
+        function deleteEvent(index) {
+            if(confirm('Apakah Anda yakin ingin menghapus event ini?')) {
+                events.splice(index, 1);
+                renderEvents();
+            }
+        }
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const id = document.getElementById('event-id').value;
+            const newEvent = {
+                title: document.getElementById('title').value,
+                date: document.getElementById('date').value,
+                location: document.getElementById('location').value,
+                capacity: parseInt(document.getElementById('capacity').value),
+                description: document.getElementById('description').value,
+                status: 'Tersedia'
+            };
+
+            if(id) {
+                events[id] = newEvent;
+            } else {
+                events.push(newEvent);
+            }
+
+            resetForm();
+            renderEvents();
+        });
+
+        resetBtn.addEventListener('click', resetForm);
+
+        renderEvents();
+    </script>
+</body>
+</html>
