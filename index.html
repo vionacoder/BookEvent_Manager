@@ -2,68 +2,75 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BookEvent Manager</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>BookEvent Manager</h1>
-        <p>Kelola Event & Workshop Buku dengan mudah</p>
-    </header>
 
-    <main>
-        <!-- Form Tambah Event -->
-        <section class="form-section">
-            <h2>Tambah / Ubah Event</h2>
-            <form>
-                <label for="title">Judul Event:</label>
-                <input type="text" id="title" required>
+<header>
+    <h1>BookEvent Manager</h1>
+    <p>Kelola Event & Workshop Buku dengan mudah</p>
+</header>
 
-                <label for="date">Tanggal & Waktu:</label>
-                <input type="datetime-local" id="date" required>
+<main>
+    <!-- Form Tambah / Edit Event -->
+    <section class="form-section">
+        <h2 id="formTitle">Tambah Event</h2>
+        <form id="eventForm">
+            <label for="title">Judul Event</label>
+            <input type="text" name="title" id="title" required>
 
-                <label for="location">Lokasi / Platform:</label>
-                <input type="text" id="location" required>
+            <label for="date">Tanggal & Waktu</label>
+            <input type="datetime-local" name="date" id="date" required>
 
-                <label for="capacity">Kapasitas Peserta:</label>
-                <input type="number" id="capacity" required min="1">
+            <label for="location">Lokasi</label>
+            <input type="text" name="location" id="location" required>
 
-                <label for="description">Deskripsi Singkat:</label>
-                <textarea id="description" rows="3"></textarea>
+            <label for="capacity">Kapasitas</label>
+            <input type="number" name="capacity" id="capacity" min="1" required>
 
-                <button type="submit">Simpan Event</button>
-                <button type="reset">Reset</button>
-            </form>
-        </section>
+            <label for="description">Deskripsi</label>
+            <textarea name="description" id="description"></textarea>
 
-        <!-- Daftar Event -->
-        <section class="table-section">
-            <h2>Daftar Event</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Judul</th>
-                        <th>Tanggal & Waktu</th>
-                        <th>Lokasi</th>
-                        <th>Kapasitas</th>
-                        <th>Status</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td colspan="6" style="text-align:center;">
-                            Data event akan ditampilkan di sini
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-    </main>
+            <button type="submit">Simpan Event</button>
+            <button type="reset" id="resetBtn">Reset</button>
+        </form>
+    </section>
 
-    <footer>
-        <p>BookWorms &copy; 2025</p>
-    </footer>
+    <!-- Search Event -->
+    <section class="table-section">
+        <h2>Cari Event</h2>
+        <input type="text" id="searchInput" placeholder="Cari berdasarkan judul atau lokasi..." style="width:100%; padding:0.7rem; margin-bottom:1rem; border-radius:8px; border:1px solid #ccc;">
+    </section>
+
+    <!-- Daftar Event -->
+    <section class="table-section">
+        <h2>Daftar Event</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Judul</th>
+                    <th>Waktu</th>
+                    <th>Lokasi</th>
+                    <th>Kapasitas</th>
+                    <th>Status</th>
+                    <th>Deskripsi</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody id="eventTableBody">
+                <tr>
+                    <td colspan="7" style="text-align:center">Belum ada event</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+<footer>
+    <p>BookWorms © 2025</p>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
